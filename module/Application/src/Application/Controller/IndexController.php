@@ -16,6 +16,12 @@ class IndexController extends AbstractActionController
 {
     public function indexAction()
     {
+        $objectManager = $this
+        ->getServiceLocator()
+        ->get('Doctrine\ORM\EntityManager');
+        
+        $config = new \Application\Entity\Config();
+        
         return new ViewModel();
     }
 }
