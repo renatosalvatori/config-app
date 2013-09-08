@@ -2,7 +2,10 @@
 
 namespace Application\Entity;
 use Doctrine\ORM\Mapping as ORM;
-/** @ORM\Entity */
+/** 
+ * @ORM\Entity 
+ * @ORM\HasLifecycleCallbacks
+ */
 class Config {
     /** 
      * @ORM\Id
@@ -65,4 +68,23 @@ class Config {
     protected $timeout;
     
     // getters/setters
+    /**
+     * Set the minmum length of the user ID
+     * @param int $minLengthUserId The minimum length of the user ID
+     */
+    public function setMinLengthUserId($minLengthUserId){
+        $this->minLengthUserId = $minLengthUserId;
+    }
+    
+    /**
+     * Before persisting this entity, check that the minimum
+     * length of the user ID is not less than 1
+     * @ORM\PrePersist 
+     * @ORM\PreUpdate
+     */
+    public function assertMinLengthUserIdNotLessThan1(){
+        if($this->minLengthUserId < 1){
+            throw new \Exception('Minimum length of user ID cannot be less than 1.');
+        }
+    }
 }

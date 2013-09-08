@@ -21,7 +21,9 @@ class IndexController extends AbstractActionController
         ->get('Doctrine\ORM\EntityManager');
         
         $config = new \Application\Entity\Config();
-        
+        $config->setMinLengthUserId("hello");
+        $objectManager->persist($config);
+        exit;
         return new ViewModel();
     }
 }
