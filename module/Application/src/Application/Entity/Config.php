@@ -68,16 +68,192 @@ class Config {
     protected $timeout;
     
     // getters/setters
+    
     /**
-     * Set the minmum length of the user ID
-     * @param int $minLengthUserId The minimum length of the user ID
+     * Get the minimum length of the user ID
+     * @return int 
      */
-    public function setMinLengthUserId($minLengthUserId){
-        $this->minLengthUserId = $minLengthUserId;
+    public function getMinLengthUserId(){
+        return $this->minLengthUserId;
     }
     
     /**
-     * Returns this object as a simple array 
+     * Set the minmum length of the user ID
+     * @param int $minLengthUserId
+     * @return \Application\Entity\Config This object
+     */
+    public function setMinLengthUserId($minLengthUserId){
+        $this->minLengthUserId = $minLengthUserId;
+        return $this;
+    }
+    
+    /**
+     * Get the minimum length of the user name
+     * @return int 
+     */
+    public function getminLengthUserName(){
+      return $this->getminLengthUserName;
+    }
+    
+    /**
+     * Set the minimum length of the user name
+     * @param int $minLengthUserName
+     * @return \Application\Entity\Config 
+     */
+    public function setMinLengthUserName($minLengthUserName){
+      $this->minLengthUserName = $minLengthUserName;
+      return $this;
+    }
+    
+    /**
+     * Get the minimum length of the user password
+     * @return int 
+     */
+    public function getMinLengthUserPassword(){
+      return $this->minLengthUserPassword;
+    }
+    
+    /**
+     * Set the minimum length of the user password
+     * @param int $minLengthUserPassword
+     * @return \Application\Entity\Config 
+     */
+    public function setMinLengthUserPassword($minLengthUserPassword){
+      $this->minLengthUserPassword = $minLengthUserPassword;
+      return $this;
+    }
+    
+    /**
+     * Get the number of days before passwords can be reused
+     * @return int 
+     */
+    public function getDaysPasswordReuse(){
+      return $this->daysPasswordReuse;
+    }
+    
+    /**
+     * Set the number of days before passwords can be reused
+     * @param int $daysPasswordReuse
+     * @return \Application\Entity\Config 
+     */
+    public function setDaysPasswordReuse($daysPasswordReuse){
+      $this->daysPasswordReuse = $daysPasswordReuse;
+      return $this;
+    }
+    
+    /**
+     * Get whether the passwords must contain letters and numbers
+     * @return boolean 
+     */
+    public function getPasswordLettersAndNumbers(){
+      return $this->passwordLettersAndNumbers;
+    }
+    
+    /**
+     * Set whether passwords must contain letters and numbers
+     * @param int $passwordLettersAndNumbers
+     * @return \Application\Entity\Config 
+     */
+    public function setPasswordLettersAndNumbers($passwordLettersAndNumbers){
+      $this->passwordLettersAndNumbers = $passwordLettersAndNumbers;
+      return $this;
+    }
+    
+    /**
+     * Get whether password must contain upper and lower case characters
+     * @return type 
+     */
+    public function getPasswordUpperLower(){
+      return $this->passwordUpperLower;
+    }
+    
+    /**
+     * Set whether password must contain upper and lower case characters
+     * @param type $passwordUpperLower
+     * @return \Application\Entity\Config 
+     */
+    public function setPasswordUpperLower($passwordUpperLower){
+      $this->passwordUpperLower = $passwordUpperLower;
+      return $this;
+    }
+    
+    /**
+     * Get the number of failed logins before user is locked out
+     * @return int 
+     */
+    public function getMaxFailedLogins(){
+      return $this->maxFailedLogins;
+    }
+    
+    /**
+     * Set the number of failed logins before user is locked out
+     * @param int $maxFailedLogins
+     * @return \Application\Entity\Config 
+     */
+    public function setMaxFailedLogins($maxFailedLogins){
+      $this->maxFailedLogins = $maxFailedLogins;
+      return $this;
+    }
+    
+    /**
+     * Get the password validity period in days
+     * @return int 
+     */
+    public function getPasswordValidity(){
+      return $this->passwordValidity;
+    }
+    
+    /**
+     * Set the password validity in days
+     * @param int $passwordValidity
+     * @return \Application\Entity\Config 
+     */
+    public function setPasswordValidity($passwordValidity){
+      $this->passwordValidity = $passwordValidity;
+      return $this;
+    }
+    
+    /**
+     * Get the number of days prior to expiry that the user starts getting
+     * warning messages
+     * @return int 
+     */
+    public function getPasswordExpiryDays(){
+      return $this->passwordExpiryDays;
+    }
+    
+    /**
+     * Get the number of days prior to expiry that the user starts getting
+     * warning messages
+     * @param int $passwordExpiryDays
+     * @return \Application\Entity\Config 
+     */
+    public function setPasswordExpiryDays($passwordExpiryDays){
+      $this->passwordExpiryDays = $passwordExpiryDays;
+      return $this;
+    }
+    
+    /**
+     * Get the timeout period of the application
+     * @return int 
+     */
+    public function getTimeout(){
+      return $this->timeout;
+    }
+    
+    /**
+     * Get the timeout period of the application
+     * @param int $timeout
+     * @return \Application\Entity\Config 
+     */
+    public function setTimeout($timeout){
+      $this->timeout = $timeout;
+      return $this;
+    }
+    
+    /**
+     * Returns the properties of this object as an array for ease of use
+     * @return array 
      */
     public function toArray(){
       return get_object_vars($this);
