@@ -24,7 +24,7 @@ All dependencies will now be installed.
 The next step is to setup the database. Do this by opening a command window and navigating to
 the following directory:
 
-```C:/path/to/my/app/vendor/bin/```
+```path/to/my/app/vendor/bin/```
 
 Then execute the following command:
 
