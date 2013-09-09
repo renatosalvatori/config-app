@@ -6,7 +6,6 @@
  * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
-
 return array(
     'doctrine' => array(
         'driver' => array(
@@ -25,7 +24,7 @@ return array(
     'router' => array(
         'routes' => array(
             /**
-             * Added restful route as seen here: http://spabby.github.io/zend-framework-2-REST/ 
+             * Added restful route for the config controller
              */
             'configuration' => array(
                 'type' => 'segment',

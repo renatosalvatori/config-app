@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * Doctrine configuration information 
+ */
 return array(
   'doctrine' => array(
     'connection' => array(
