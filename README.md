@@ -17,4 +17,4 @@ variable (check by typing 'git' into the command line and see if it works!).
 Copy or clone this repository into a directory accessible by your web server. Open a command line
 window and navigate to the directory. Run the following command:
 
- composer install
+''composer install
