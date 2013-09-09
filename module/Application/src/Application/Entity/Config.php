@@ -77,6 +77,13 @@ class Config {
     }
     
     /**
+     * Returns this object as a simple array 
+     */
+    public function toArray(){
+      return get_object_vars($this);
+    }
+    
+    /**
      * Before persisting this entity, check that the minimum
      * length of the user ID is not less than 1
      * @ORM\PrePersist 
