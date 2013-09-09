@@ -8,3 +8,5 @@ nbproject
 .settings
 composer.lock
 vendor/bin
+/vendor/doctrine/doctrine-module/.travis/
+/vendor/doctrine/doctrine-orm-module/.travis/
