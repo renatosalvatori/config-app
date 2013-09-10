@@ -22,7 +22,7 @@ class ConfigController extends AbstractRestfulController
       
       //there should only ever be one row in the configuration table, so I use findAll
       $config = $em->getRepository("\Application\Entity\Config")->findAll();
-      
+
       //return a JsonModel to the user. I use my toArray function to convert the doctrine
       //entity into an array - the JsonModel can't handle a doctrine entity itself.
       return new JsonModel(array(
@@ -41,11 +41,9 @@ class ConfigController extends AbstractRestfulController
       //there should only ever be one row in the configuration table, so I use findAll
       $config = $em->getRepository("\Application\Entity\Config")->findAll();
       
-      //loop through each submitted field
+      //loop through each submitted field and set the value
       foreach($data as $column=>$value){
-        //work out the name of the setter function for each field
-        $func = "set".ucfirst($column);
-        $config[0]->$func($value);
+        $config[0]->{$column} = $value;
       }
       
       //save the entity to the database
