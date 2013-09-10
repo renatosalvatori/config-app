@@ -2,6 +2,11 @@
 
 namespace Application\Entity;
 use Doctrine\ORM\Mapping as ORM;
+use Zend\InputFilter\InputFilter;
+use Zend\InputFilter\Input;
+use Zend\Validator;
+use Zend\I18n\Validator as IntValidator;
+
 /** 
  * @ORM\Entity 
  * @ORM\HasLifecycleCallbacks
@@ -260,14 +265,39 @@ class Config {
     }
     
     /**
-     * Before persisting this entity, check that the minimum
-     * length of the user ID is not less than 1
+     * Before persisting this entity run some validation 
      * @ORM\PrePersist 
      * @ORM\PreUpdate
      */
-    public function assertMinLengthUserIdNotLessThan1(){
-        if($this->minLengthUserId < 1){
-            throw new \Exception('Minimum length of user ID cannot be less than 1.');
+    public function validate(){
+      $inputFilter = $this->getInputFilter();
+      $inputFilter->setData($this->toArray());
+      if(!$inputFilter->isValid()){
+        $errors = '';
+        foreach($inputFilter->getInvalidInput() as $error){
+          $errors.= $error->getName().' is not valid: '.implode(',',$error->getMessages());
         }
+        throw new \Exception($errors);
+      }
+    }
+    
+    /**
+     * Get the input filters for all fields
+     * @return Zend\InputFilter\InputFilter 
+     */
+    public function getInputFilter(){
+      if(!isset($this->inputFilter)){
+        $minLengthUserId = new Input('minLengthUserId');
+        $minLengthUserId->getValidatorChain()
+                        ->addValidator(new Validator\GreaterThan(1))
+                        ->addValidator(new IntValidator\Int());
+        
+        $inputFilter = new InputFilter();
+        $inputFilter->add($minLengthUserId);
+        
+        $this->inputFilter = $inputFilter;
+      }
+      
+      return $this->inputFilter;
     }
 }
