@@ -1,6 +1,9 @@
 <?php
 /**
  * A restful controller that retrieves and updates configuration information
+ * @todo Create a class called ConfigController that does the real work and returns instances
+ * of Entity\Config. Create a class called ConfigRestController which accesses this controller
+ * and returns it in JSON format - might make it easier to test.
  */
 namespace Application\Controller;
 

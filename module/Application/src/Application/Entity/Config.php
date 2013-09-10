@@ -1,4 +1,9 @@
 <?php
+/**
+ * TODO: add a base entity class which handles validation via annotations
+ * and includes toArray function. Also needs to get/set using __get and __set
+ * magic methods.
+ */
 
 namespace Application\Entity;
 use Doctrine\ORM\Mapping as ORM;
