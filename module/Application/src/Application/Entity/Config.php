@@ -4,7 +4,6 @@
  * and includes toArray function. Also needs to get/set using __get and __set
  * magic methods. Potentially add a fromArray method?
  */
-
 namespace Application\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Zend\InputFilter\InputFilter;
@@ -193,8 +192,61 @@ class Config {
                         ->addValidator(new Validator\GreaterThan(1))
                         ->addValidator(new IntValidator\Int());
         
+        
+        $minLengthUserName = new Input('minLengthUserName');
+        $minLengthUserName->getValidatorChain()
+                          ->addValidator(new Validator\GreaterThan(2))
+                          ->addValidator(new IntValidator\Int());
+        
+        $minLengthUserPassword = new Input('minLengthUserPassword');
+        $minLengthUserPassword->getValidatorChain()
+                              ->addValidator(new Validator\GreaterThan(3))
+                              ->addValidator(new IntValidator\Int());
+        
+        $daysPasswordReuse = new Input('daysPasswordReuse');
+        $daysPasswordReuse->getValidatorChain()
+                          ->addValidator(new Validator\GreaterThan(0))
+                          ->addValidator(new IntValidator\Int());
+        
+        $passwordLettersAndNumbers = new Input('passwordLettersAndNumbers');
+        $passwordLettersAndNumbers->getValidatorChain()
+                                  ->addValidator(new Validator\InArray(array('haystack' => array(true, false))));
+        
+        $passwordUpperLower = new Input('passwordUpperLower');
+        $passwordUpperLower->getValidatorChain()
+                           ->addValidator(new IntValidator\Int());
+        
+        $maxFailedLogins = new Input('maxFailedLogins');
+        $maxFailedLogins->getValidatorChain()
+                        ->addValidator(new Validator\GreaterThan(0))
+                        ->addValidator(new IntValidator\Int());
+        
+        $passwordValidity = new Input('passwordValidity');
+        $passwordValidity->getValidatorChain()
+                         ->addValidator(new Validator\GreaterThan(1))
+                         ->addValidator(new IntValidator\Int());
+        
+        $passwordExpiryDays = new Input('passwordExpiryDays');
+        $passwordExpiryDays->getValidatorChain()
+                           ->addValidator(new Validator\GreaterThan(1))
+                           ->addValidator(new IntValidator\Int());
+        
+        $timeout = new Input('timeout');
+        $timeout->getValidatorChain()
+                ->addValidator(new Validator\GreaterThan(0))
+                ->addValidator(new IntValidator\Int());
+        
         $inputFilter = new InputFilter();
-        $inputFilter->add($minLengthUserId);
+        $inputFilter->add($minLengthUserId)
+                    ->add($minLengthUserName)
+                    ->add($minLengthUserPassword)
+                    ->add($daysPasswordReuse)
+                    ->add($passwordLettersAndNumbers)
+                    ->add($passwordUpperLower)
+                    ->add($maxFailedLogins)
+                    ->add($passwordValidity)
+                    ->add($passwordExpiryDays)
+                    ->add($timeout);
         
         $this->inputFilter = $inputFilter;
       }
