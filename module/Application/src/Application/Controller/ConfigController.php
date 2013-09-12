@@ -21,7 +21,7 @@ class ConfigController extends AbstractRestfulController
                  ->get('Doctrine\ORM\EntityManager');
       
       //there should only ever be one row in the configuration table, so I use findAll
-      $config = $em->getRepository("\Application\Entity\Config")->findAll();      
+      $config = $em->getRepository("\Application\Entity\Config")->findAll();
       
       //return a JsonModel to the user. I use my toArray function to convert the doctrine
       //entity into an array - the JsonModel can't handle a doctrine entity itself.

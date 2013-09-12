@@ -5,6 +5,7 @@
  * magic methods. Potentially add a fromArray method?
  */
 namespace Application\Entity;
+
 use Doctrine\ORM\Mapping as ORM;
 use Zend\Validator;
 use Zend\I18n\Validator as I18nValidator;
@@ -13,6 +14,7 @@ use Perceptive\Database\Entity;
 
 /** 
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks
  */
 class Config extends Entity{
     /** 
@@ -260,13 +262,18 @@ class Config extends Entity{
     }
     
     public function getValidators(){
-      $validators = array(
+      if(!isset($this->validators)){
+        $validators = array(
           'minLengthUserId' => array(
               new I18nValidator\Int(),
               new Validator\GreaterThan(1),
           )  
-      );
+        );
+        
+        $this->validators = $validators;
+      }
       
-      return $validators;
+      
+      return $this->validators;
     }
 }

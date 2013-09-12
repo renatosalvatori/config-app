@@ -13,10 +13,6 @@ class Entity{
     //An array of validators for various fields in this entity
     protected $validators;
   
-    public function __construct(){
-      $this->validators = $this->getValidators();
-    }
-  
     /**
      * Returns the properties of this object as an array for ease of use. Will
      * return only properties with the ORM\Column annotation as this way we know
@@ -104,9 +100,10 @@ class Entity{
      * @param array $validators
      * @return boolean|string 
      */
-    protected function setField($fieldName, $value, $validators){
+    protected function setField($fieldName, $value){
       //Create a validator chain
       $validatorChain = new ValidatorChain();
+      $validators = $this->getValidators();
       
       //Try to retrieve the validators for this field
       if(array_key_exists($fieldName, $this->validators)){
@@ -114,7 +111,7 @@ class Entity{
       }else{
         $validators = array();
       }
-      
+        
       //Add all validators to the chain
       foreach($validators as $validator){
         $validatorChain->attach($validator);
