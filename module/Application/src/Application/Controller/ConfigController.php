@@ -21,8 +21,8 @@ class ConfigController extends AbstractRestfulController
                  ->get('Doctrine\ORM\EntityManager');
       
       //there should only ever be one row in the configuration table, so I use findAll
-      $config = $em->getRepository("\Application\Entity\Config")->findAll();
-
+      $config = $em->getRepository("\Application\Entity\Config")->findAll();      
+      
       //return a JsonModel to the user. I use my toArray function to convert the doctrine
       //entity into an array - the JsonModel can't handle a doctrine entity itself.
       return new JsonModel(array(
@@ -41,10 +41,8 @@ class ConfigController extends AbstractRestfulController
       //there should only ever be one row in the configuration table, so I use findAll
       $config = $em->getRepository("\Application\Entity\Config")->findAll();
       
-      //loop through each submitted field and set the value
-      foreach($data as $column=>$value){
-        $config[0]->{$column} = $value;
-      }
+      //use the entity's fromArray function to update the data
+      $config[0]->fromArray($data);
       
       //save the entity to the database
       $em->persist($config[0]);

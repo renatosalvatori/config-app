@@ -6,16 +6,15 @@
  */
 namespace Application\Entity;
 use Doctrine\ORM\Mapping as ORM;
-use Zend\InputFilter\InputFilter;
-use Zend\InputFilter\Input;
 use Zend\Validator;
-use Zend\I18n\Validator as IntValidator;
+use Zend\I18n\Validator as I18nValidator;
+use Perceptive\Database\Entity;
+
 
 /** 
- * @ORM\Entity 
- * @ORM\HasLifecycleCallbacks
+ * @ORM\Entity
  */
-class Config {
+class Config extends Entity{
     /** 
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -76,181 +75,198 @@ class Config {
      */
     protected $timeout;
     
-    /**
-     * A collection of input filters to validate the fields before setting
-     * and before persisting the entity
-     * @var Zend\InputFilter\InputFilter 
-     */
-    private $inputFilter;
-    
     // getters/setters
     /**
-     * Simply gets any value from this object and returns it
-     * @param string $property The name of the property to return
-     * @return mixed 
+     * Get the minimum length of the user ID
+     * @return int 
      */
-    public function __get($property){
-      return $this->{$property};
+    public function getMinLengthUserId(){
+        return $this->minLengthUserId;
+    }
+
+    /**
+     * Set the minmum length of the user ID
+     * @param int $minLengthUserId
+     * @return \Application\Entity\Config This object
+     */
+    public function setMinLengthUserId($minLengthUserId){
+        //Use the setField function, which checks whether the field is valid,
+        //to set the value.
+        return $this->setField('minLengthUserId', $minLengthUserId);
+    }
+
+    /**
+     * Get the minimum length of the user name
+     * @return int 
+     */
+    public function getminLengthUserName(){
+      return $this->getminLengthUserName;
+    }
+
+    /**
+     * Set the minimum length of the user name
+     * @param int $minLengthUserName
+     * @return \Application\Entity\Config 
+     */
+    public function setMinLengthUserName($minLengthUserName){
+      $this->minLengthUserName = $minLengthUserName;
+      return $this;
+    }
+
+    /**
+     * Get the minimum length of the user password
+     * @return int 
+     */
+    public function getMinLengthUserPassword(){
+      return $this->minLengthUserPassword;
+    }
+
+    /**
+     * Set the minimum length of the user password
+     * @param int $minLengthUserPassword
+     * @return \Application\Entity\Config 
+     */
+    public function setMinLengthUserPassword($minLengthUserPassword){
+      $this->minLengthUserPassword = $minLengthUserPassword;
+      return $this;
+    }
+
+    /**
+     * Get the number of days before passwords can be reused
+     * @return int 
+     */
+    public function getDaysPasswordReuse(){
+      return $this->daysPasswordReuse;
+    }
+
+    /**
+     * Set the number of days before passwords can be reused
+     * @param int $daysPasswordReuse
+     * @return \Application\Entity\Config 
+     */
+    public function setDaysPasswordReuse($daysPasswordReuse){
+      $this->daysPasswordReuse = $daysPasswordReuse;
+      return $this;
+    }
+
+    /**
+     * Get whether the passwords must contain letters and numbers
+     * @return boolean 
+     */
+    public function getPasswordLettersAndNumbers(){
+      return $this->passwordLettersAndNumbers;
+    }
+
+    /**
+     * Set whether passwords must contain letters and numbers
+     * @param int $passwordLettersAndNumbers
+     * @return \Application\Entity\Config 
+     */
+    public function setPasswordLettersAndNumbers($passwordLettersAndNumbers){
+      $this->passwordLettersAndNumbers = $passwordLettersAndNumbers;
+      return $this;
+    }
+
+    /**
+     * Get whether password must contain upper and lower case characters
+     * @return type 
+     */
+    public function getPasswordUpperLower(){
+      return $this->passwordUpperLower;
+    }
+
+    /**
+     * Set whether password must contain upper and lower case characters
+     * @param type $passwordUpperLower
+     * @return \Application\Entity\Config 
+     */
+    public function setPasswordUpperLower($passwordUpperLower){
+      $this->passwordUpperLower = $passwordUpperLower;
+      return $this;
+    }
+
+    /**
+     * Get the number of failed logins before user is locked out
+     * @return int 
+     */
+    public function getMaxFailedLogins(){
+      return $this->maxFailedLogins;
+    }
+
+    /**
+     * Set the number of failed logins before user is locked out
+     * @param int $maxFailedLogins
+     * @return \Application\Entity\Config 
+     */
+    public function setMaxFailedLogins($maxFailedLogins){
+      $this->maxFailedLogins = $maxFailedLogins;
+      return $this;
+    }
+
+    /**
+     * Get the password validity period in days
+     * @return int 
+     */
+    public function getPasswordValidity(){
+      return $this->passwordValidity;
+    }
+
+    /**
+     * Set the password validity in days
+     * @param int $passwordValidity
+     * @return \Application\Entity\Config 
+     */
+    public function setPasswordValidity($passwordValidity){
+      $this->passwordValidity = $passwordValidity;
+      return $this;
+    }
+
+    /**
+     * Get the number of days prior to expiry that the user starts getting
+     * warning messages
+     * @return int 
+     */
+    public function getPasswordExpiryDays(){
+      return $this->passwordExpiryDays;
+    }
+
+    /**
+     * Get the number of days prior to expiry that the user starts getting
+     * warning messages
+     * @param int $passwordExpiryDays
+     * @return \Application\Entity\Config 
+     */
+    public function setPasswordExpiryDays($passwordExpiryDays){
+      $this->passwordExpiryDays = $passwordExpiryDays;
+      return $this;
+    }
+
+    /**
+     * Get the timeout period of the application
+     * @return int 
+     */
+    public function getTimeout(){
+      return $this->timeout;
+    }
+
+    /**
+     * Get the timeout period of the application
+     * @param int $timeout
+     * @return \Application\Entity\Config 
+     */
+    public function setTimeout($timeout){
+      $this->timeout = $timeout;
+      return $this;
     }
     
-    /**
-     * Sets an object property subject to validation checks. If successful it
-     * will return this object to allow for a 'fluent' interface. If the field is
-     * invalid in some way it will throw an Exception
-     * @param string $property
-     * @param mixed $value
-     * @return \Application\Entity\Config
-     * @throws \Exception 
-     */
-    public function __set($property, $value){
-      //Do not allow undefined properties to be set
-      if(!property_exists($this,$property)){
-        throw new \Exception('Property '.$property.' does not exist.');
-      }
+    public function getValidators(){
+      $validators = array(
+          'minLengthUserId' => array(
+              new I18nValidator\Int(),
+              new Validator\GreaterThan(1),
+          )  
+      );
       
-      //Retrieve the input filter for this entity
-      $inputFilter = $this->getInputFilter();
-      $inputs = $inputFilter->getInputs();
-      
-      //If the field we are trying to set is included in the list of inputs
-      if(array_key_exists($property, $inputs)){
-        //Get a reference to the relevant input and set the value
-        $input = $inputs[$property];
-        $input->setValue($value);
-        
-        //If it is a valid value then set the property and return $this.
-        //Otherwise, throw an exception.
-        if($input->isValid()){
-          $this->{$property} = $value;
-          return $this;
-        }else{
-          $error = implode(',',$input->getMessages());
-          throw new \Exception($error);
-        }
-      }
-    }
-    
-    /**
-     * Returns the properties of this object as an array for ease of use. Will
-     * return only properties with the ORM\Column annotation as this way we know
-     * for sure that it is a column with data associated, and won't pick up any
-     * other properties. 
-     * @return array 
-     */
-    public function toArray(){
-      //Create an annotation reader so we can read annotations
-      $reader = new \Doctrine\Common\Annotations\AnnotationReader();
-      
-      //Create a reflection class and retrieve the properties
-      $reflClass = new \ReflectionClass($this);
-      $properties = $reflClass->getProperties();
-      
-      //Create an array in which to store the data
-      $array = array();
-      
-      //Loop through each property. Get the annotations for each property
-      //and add to the array to return, ONLY if it contains an ORM\Column
-      //annotation.
-      foreach($properties as $property){
-        $annotations = $reader->getPropertyAnnotations($property);
-        foreach($annotations as $annotation){
-          if($annotation instanceof \Doctrine\ORM\Mapping\Column){
-            $array[$property->name] = $this->{$property->name};
-          }
-        }
-      }
-      
-      //Finally, return the data array to the user
-      return $array;
-    }
-    
-    /**
-     * Before persisting this entity run some validation 
-     * @ORM\PrePersist 
-     * @ORM\PreUpdate
-     */
-    public function validate(){
-      $inputFilter = $this->getInputFilter();
-      $inputFilter->setData($this->toArray());
-      if(!$inputFilter->isValid()){
-        $errors = '';
-        foreach($inputFilter->getInvalidInput() as $error){
-          $errors.= $error->getName().' is not valid: '.implode(',',$error->getMessages());
-        }
-        throw new \Exception($errors);
-      }
-    }
-    
-    /**
-     * Get the input filters for all fields
-     * @return Zend\InputFilter\InputFilter 
-     */
-    public function getInputFilter(){
-      if(!isset($this->inputFilter)){
-        $minLengthUserId = new Input('minLengthUserId');
-        $minLengthUserId->getValidatorChain()
-                        ->addValidator(new Validator\GreaterThan(1))
-                        ->addValidator(new IntValidator\Int());
-        
-        
-        $minLengthUserName = new Input('minLengthUserName');
-        $minLengthUserName->getValidatorChain()
-                          ->addValidator(new Validator\GreaterThan(2))
-                          ->addValidator(new IntValidator\Int());
-        
-        $minLengthUserPassword = new Input('minLengthUserPassword');
-        $minLengthUserPassword->getValidatorChain()
-                              ->addValidator(new Validator\GreaterThan(3))
-                              ->addValidator(new IntValidator\Int());
-        
-        $daysPasswordReuse = new Input('daysPasswordReuse');
-        $daysPasswordReuse->getValidatorChain()
-                          ->addValidator(new Validator\GreaterThan(0))
-                          ->addValidator(new IntValidator\Int());
-        
-        $passwordLettersAndNumbers = new Input('passwordLettersAndNumbers');
-        $passwordLettersAndNumbers->getValidatorChain()
-                                  ->addValidator(new Validator\InArray(array('haystack' => array(true, false))));
-        
-        $passwordUpperLower = new Input('passwordUpperLower');
-        $passwordUpperLower->getValidatorChain()
-                           ->addValidator(new IntValidator\Int());
-        
-        $maxFailedLogins = new Input('maxFailedLogins');
-        $maxFailedLogins->getValidatorChain()
-                        ->addValidator(new Validator\GreaterThan(0))
-                        ->addValidator(new IntValidator\Int());
-        
-        $passwordValidity = new Input('passwordValidity');
-        $passwordValidity->getValidatorChain()
-                         ->addValidator(new Validator\GreaterThan(1))
-                         ->addValidator(new IntValidator\Int());
-        
-        $passwordExpiryDays = new Input('passwordExpiryDays');
-        $passwordExpiryDays->getValidatorChain()
-                           ->addValidator(new Validator\GreaterThan(1))
-                           ->addValidator(new IntValidator\Int());
-        
-        $timeout = new Input('timeout');
-        $timeout->getValidatorChain()
-                ->addValidator(new Validator\GreaterThan(0))
-                ->addValidator(new IntValidator\Int());
-        
-        $inputFilter = new InputFilter();
-        $inputFilter->add($minLengthUserId)
-                    ->add($minLengthUserName)
-                    ->add($minLengthUserPassword)
-                    ->add($daysPasswordReuse)
-                    ->add($passwordLettersAndNumbers)
-                    ->add($passwordUpperLower)
-                    ->add($maxFailedLogins)
-                    ->add($passwordValidity)
-                    ->add($passwordExpiryDays)
-                    ->add($timeout);
-        
-        $this->inputFilter = $inputFilter;
-      }
-      
-      return $this->inputFilter;
+      return $validators;
     }
 }
