@@ -6,8 +6,6 @@ namespace ApplicationTest\Config;
 
 use ApplicationTest\Bootstrap;
 use Application\Entity\Config;
-use Zend\Validator;
-use Zend\I18n\Validator as I18nValidator;
 
 class ConfigTest extends \PHPUnit_Framework_TestCase{
 
