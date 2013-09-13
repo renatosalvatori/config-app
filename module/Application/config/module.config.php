@@ -70,9 +70,10 @@ return array(
         ),
     ),
     'controllers' => array(
+        //controller which do not have dependencies can go here. Controllers with dependencies
+        //must be included in the getControllerConfig function in Module.php
         'invokables' => array(
             'Application\Controller\Index' => 'Application\Controller\IndexController',
-            'Application\Controller\Config' => 'Application\Controller\ConfigController'
         ),
     ),
     'view_manager' => array(

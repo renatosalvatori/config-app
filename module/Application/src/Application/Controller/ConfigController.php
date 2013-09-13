@@ -1,9 +1,6 @@
 <?php
 /**
  * A restful controller that retrieves and updates configuration information
- * @todo Create a class called ConfigController that does the real work and returns instances
- * of Entity\Config. Create a class called ConfigRestController which accesses this controller
- * and returns it in JSON format - might make it easier to test.
  */
 namespace Application\Controller;
 
@@ -13,12 +10,25 @@ use Zend\View\Model\JsonModel;
 class ConfigController extends AbstractRestfulController
 {
     /**
+     * The doctrine EntityManager for use with database operations
+     * @var \Doctrine\ORM\EntityManager
+     */
+    protected $em;
+    
+    /**
+     * Constructor function manages dependencies
+     * @param \Doctrine\ORM\EntityManager $em 
+     */
+    public function __construct(\Doctrine\ORM\EntityManager $em){
+      $this->em = $em;
+    }
+  
+    /**
      * Retrieves the configuration from the database 
      */
     public function getList(){
       //locate the doctrine entity manager
-      $em = $this->getServiceLocator()
-                 ->get('Doctrine\ORM\EntityManager');
+      $em = $this->em;
       
       //there should only ever be one row in the configuration table, so I use findAll
       $config = $em->getRepository("\Application\Entity\Config")->findAll();
@@ -35,8 +45,7 @@ class ConfigController extends AbstractRestfulController
      */
     public function replaceList($data){
       //locate the doctrine entity manager
-      $em = $this->getServiceLocator()
-                 ->get('Doctrine\ORM\EntityManager');
+      $em = $this->em;
       
       //there should only ever be one row in the configuration table, so I use findAll
       $config = $em->getRepository("\Application\Entity\Config")->findAll();

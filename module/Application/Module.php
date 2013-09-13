@@ -36,4 +36,25 @@ class Module
             ),
         );
     }
+    
+    /**
+     * Added by HP to allow dependency injection into controllers 
+     */
+    public function getControllerConfig(){
+        return array(
+            'factories' => array(
+                'Application\Controller\Config' => function(\Zend\Mvc\Controller\ControllerManager $cm){
+                  //Get a handle on the service locator
+                  $sm = $cm->getServiceLocator();
+
+                  //Feed the configuration controller the doctrine entity manager
+                  $em = $sm->get('Doctrine\ORM\EntityManager');
+                  $controller = new \Application\Controller\ConfigController($em);
+
+                  //Return 
+                  return $controller;
+                },
+            ),
+        );
+    }
 }
