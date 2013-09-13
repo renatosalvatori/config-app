@@ -102,7 +102,7 @@ class Config extends Entity{
      * @return int 
      */
     public function getminLengthUserName(){
-      return $this->getminLengthUserName;
+      return $this->minLengthUserName;
     }
 
     /**
@@ -111,8 +111,9 @@ class Config extends Entity{
      * @return \Application\Entity\Config 
      */
     public function setMinLengthUserName($minLengthUserName){
-      $this->minLengthUserName = $minLengthUserName;
-      return $this;
+      //Use the setField function, which checks whether the field is valid,
+      //to set the value.
+      return $this->setField('minLengthUserName', $minLengthUserName);
     }
 
     /**
@@ -129,8 +130,9 @@ class Config extends Entity{
      * @return \Application\Entity\Config 
      */
     public function setMinLengthUserPassword($minLengthUserPassword){
-      $this->minLengthUserPassword = $minLengthUserPassword;
-      return $this;
+      //Use the setField function, which checks whether the field is valid,
+      //to set the value.
+      return $this->setField('minLengthUserPassword', $minLengthUserPassword);
     }
 
     /**
@@ -147,8 +149,9 @@ class Config extends Entity{
      * @return \Application\Entity\Config 
      */
     public function setDaysPasswordReuse($daysPasswordReuse){
-      $this->daysPasswordReuse = $daysPasswordReuse;
-      return $this;
+      //Use the setField function, which checks whether the field is valid,
+      //to set the value.
+      return $this->setField('daysPasswordReuse', $daysPasswordReuse);
     }
 
     /**
@@ -165,8 +168,9 @@ class Config extends Entity{
      * @return \Application\Entity\Config 
      */
     public function setPasswordLettersAndNumbers($passwordLettersAndNumbers){
-      $this->passwordLettersAndNumbers = $passwordLettersAndNumbers;
-      return $this;
+      //Use the setField function, which checks whether the field is valid,
+      //to set the value.
+      return $this->setField('passwordLettersAndNumbers', $passwordLettersAndNumbers);
     }
 
     /**
@@ -183,8 +187,9 @@ class Config extends Entity{
      * @return \Application\Entity\Config 
      */
     public function setPasswordUpperLower($passwordUpperLower){
-      $this->passwordUpperLower = $passwordUpperLower;
-      return $this;
+      //Use the setField function, which checks whether the field is valid,
+      //to set the value.
+      return $this->setField('passwordUpperLower', $passwordUpperLower);
     }
 
     /**
@@ -201,8 +206,9 @@ class Config extends Entity{
      * @return \Application\Entity\Config 
      */
     public function setMaxFailedLogins($maxFailedLogins){
-      $this->maxFailedLogins = $maxFailedLogins;
-      return $this;
+      //Use the setField function, which checks whether the field is valid,
+      //to set the value.
+      return $this->setField('maxFailedLogins', $maxFailedLogins);
     }
 
     /**
@@ -219,8 +225,9 @@ class Config extends Entity{
      * @return \Application\Entity\Config 
      */
     public function setPasswordValidity($passwordValidity){
-      $this->passwordValidity = $passwordValidity;
-      return $this;
+      //Use the setField function, which checks whether the field is valid,
+      //to set the value.
+      return $this->setField('passwordValidity', $passwordValidity);
     }
 
     /**
@@ -239,8 +246,9 @@ class Config extends Entity{
      * @return \Application\Entity\Config 
      */
     public function setPasswordExpiryDays($passwordExpiryDays){
-      $this->passwordExpiryDays = $passwordExpiryDays;
-      return $this;
+      //Use the setField function, which checks whether the field is valid,
+      //to set the value.
+      return $this->setField('passwordExpiryDays', $passwordExpiryDays);
     }
 
     /**
@@ -257,23 +265,74 @@ class Config extends Entity{
      * @return \Application\Entity\Config 
      */
     public function setTimeout($timeout){
-      $this->timeout = $timeout;
-      return $this;
+      //Use the setField function, which checks whether the field is valid,
+      //to set the value.
+      return $this->setField('timeout', $timeout);
     }
     
+    /**
+     * Returns a list of validators for each column. These validators are checked
+     * in the class' setField method, which is inherited from the Perceptive\Database\Entity class
+     * @return array
+     */
     public function getValidators(){
+      //If the validators array hasn't been initialised, initialise it
       if(!isset($this->validators)){
         $validators = array(
-          'minLengthUserId' => array(
-              new I18nValidator\Int(),
-              new Validator\GreaterThan(1),
-          )  
+            'minLengthUserId' => array(
+                new I18nValidator\Int(),
+                new Validator\GreaterThan(1),
+            ),
+            'minLengthUserName' => array(
+                new I18nValidator\Int(),
+                new Validator\GreaterThan(2),
+            ),
+            'minLengthUserPassword' => array(
+                new I18nValidator\Int(),
+                new Validator\GreaterThan(3),
+            ),
+            'daysPasswordReuse' => array(
+                new I18nValidator\Int(),
+                new Validator\GreaterThan(-1),
+            ),
+            'passwordLettersAndNumbers' => array(
+                new I18nValidator\Int(),
+                new Validator\GreaterThan(-1),
+                new Validator\LessThan(2),
+            ),
+            'passwordUpperLower' => array(
+                new I18nValidator\Int(),
+                new Validator\GreaterThan(-1),
+                new Validator\LessThan(2),
+            ),
+            'maxFailedLogins' => array(
+                new I18nValidator\Int(),
+                new Validator\GreaterThan(0),
+            ),
+            'passwordValidity' => array(
+                new I18nValidator\Int(),
+                new Validator\GreaterThan(1),
+            ),
+            'passwordExpiryDays' => array(
+                new I18nValidator\Int(),
+                new Validator\GreaterThan(1),
+            ),
+            'timeout' => array(
+                new I18nValidator\Int(),
+                new Validator\GreaterThan(0),
+            )
         );
-        
         $this->validators = $validators;
       }
       
-      
+      //Return the list of validators
       return $this->validators;
     }
+    
+    /**
+     * @todo: add a lifecyle event which validates before persisting the entity.
+     * This way there is no chance of invalid values being saved to the database.
+     * This should probably be implemented in the parent class so all entities know
+     * to validate.
+     */
 }
