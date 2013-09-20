@@ -10,6 +10,11 @@ use Application\Entity\Config;
 class ConfigTest extends \PHPUnit_Framework_TestCase{
   
   /**
+   * @var Application\Entity\Config 
+   */
+  protected $config;
+  
+  /**
    * Set up the class for testing. 
    */
   public function setUp(){
@@ -17,488 +22,176 @@ class ConfigTest extends \PHPUnit_Framework_TestCase{
   }
   
   /**
-   * minLengthUserId tests 
+   * A data provider which submits a range of values to each of my checking functions
+   * @return type 
    */
-  public function testCanSetMinLengthUserIdToIntegerMoreThanOrEqualTo2(){
+  public function dataProvider(){
+    return array(
+      array(-1),  
+      array(0),  
+      array(1),  
+      array(2),  
+      array(3),  
+      array(4),  
+      array(5),  
+      array(1.1),  
+      array("abc"),  
+      array(true),  
+      array(false),
+      array(null),
+    );
+  }
+  
+  /**
+   * @dataProvider dataProvider
+   */
+  public function testCanOnlySetMinLengthUserIdToIntegerMoreThanOrEqualTo2($x){
     $config = $this->config;
     $this->assertNull($config->getMinLengthUserId());
-   
-    $config->setMinLengthUserId(2);
-    $this->assertEquals(2, $config->getMinLengthUserId());
     
-    $config->setMinLengthUserId(3);
-    $this->assertEquals(3, $config->getMinLengthUserId());
-  }
-  
-  public function testCannotSetMinLengthUserIdToIntegerLessThan2(){
-    $config = $this->config;
-    $this->assertNull($config->getMinLengthUserId());
-   
-    $this->setExpectedException('\Exception');
-    $config->setMinLengthUserId(1);
-  }
-  
-  public function testCannotSetMinLengthUserIdToFloat(){
-    $config = $this->config;
-    $this->assertNull($config->getMinLengthUserId());
-   
-    $this->setExpectedException('\Exception');
-    $config->setMinLengthUserId(1.1);
-  }
-  
-  public function testCannotSetMinLengthUserIdToString(){
-    $config = $this->config;
-    $this->assertNull($config->getMinLengthUserId());
-   
-    $this->setExpectedException('\Exception');
-    $config->setMinLengthUserId("abc");
-  }
-  
-  public function testCannotSetMinLengthUserIdToNull(){
-    $config = $this->config;
-    $this->assertNull($config->getMinLengthUserId());
-   
-    $this->setExpectedException('\Exception');
-    $config->setMinLengthUserId(null);
+    if(!is_integer($x) || $x < 2){
+      $this->setExpectedException('\Exception');
+    }
+    
+    $config->setMinLengthUserId($x);
+    $this->assertEquals($x, $config->getMinLengthUserId());
   }
   
   /**
-   * minLengthUserName tests 
+   * @dataProvider dataProvider
    */
-  public function testCanSetMinLengthUserNameToIntegerMoreThanOrEqualTo3(){
+  public function testCanOnlySetMinLengthUserNameToIntegerMoreThanOrEqualTo3($x){
     $config = $this->config;
     $this->assertNull($config->getMinLengthUserName());
-   
-    $config->setMinLengthUserName(3);
-    $this->assertEquals(3, $config->getMinLengthUserName());
     
-    $config->setMinLengthUserName(4);
-    $this->assertEquals(4, $config->getMinLengthUserName());
-  }
-  
-  public function testCannotSetMinLengthUserNameToIntegerLessThan3(){
-    $config = $this->config;
-    $this->assertNull($config->getMinLengthUserName());
-   
-    $this->setExpectedException('\Exception');
-    $config->setMinLengthUserName(2);
-  }
-  
-  public function testCannotSetMinLengthUserNameToFloat(){
-    $config = $this->config;
-    $this->assertNull($config->getMinLengthUserName());
-   
-    $this->setExpectedException('\Exception');
-    $config->setMinLengthUserName(1.1);
-  }
-  
-  public function testCannotSetMinLengthUserNameToString(){
-    $config = $this->config;
-    $this->assertNull($config->getMinLengthUserName());
-   
-    $this->setExpectedException('\Exception');
-    $config->setMinLengthUserName("abc");
-  }
-  
-  public function testCannotSetMinLengthUserNameToNull(){
-    $config = $this->config;
-    $this->assertNull($config->getMinLengthUserName());
-   
-    $this->setExpectedException('\Exception');
-    $config->setMinLengthUserName(null);
+    if(!is_integer($x) || $x < 3){
+      $this->setExpectedException('\Exception');
+    }
+    
+    $config->setMinLengthUserName($x);
+    $this->assertEquals($x, $config->getMinLengthUserName());
   }
   
   /**
-   * minLengthUserPassword tests
+   * @dataProvider dataProvider
    */
-  public function testCanSetMinLengthUserPasswordToIntegerMoreThanOrEqualTo4(){
+  public function testCanOnlySetMinLengthUserPasswordToIntegerMoreThanOrEqualTo4($x){
     $config = $this->config;
     $this->assertNull($config->getMinLengthUserPassword());
-   
-    $config->setMinLengthUserPassword(4);
-    $this->assertEquals(4, $config->getMinLengthUserPassword());
     
-    $config->setMinLengthUserPassword(5);
-    $this->assertEquals(5, $config->getMinLengthUserPassword());
-  }
-  
-  public function testCannotSetMinLengthUserPasswordToIntegerLessThan4(){
-    $config = $this->config;
-    $this->assertNull($config->getMinLengthUserPassword());
-   
-    $this->setExpectedException('\Exception');
-    $config->setMinLengthUserPassword(3);
-  }
-  
-  public function testCannotSetMinLengthUserPasswordToFloat(){
-    $config = $this->config;
-    $this->assertNull($config->getMinLengthUserPassword());
-   
-    $this->setExpectedException('\Exception');
-    $config->setMinLengthUserPassword(1.1);
-  }
-  
-  public function testCannotSetMinLengthUserPasswordToString(){
-    $config = $this->config;
-    $this->assertNull($config->getMinLengthUserPassword());
-   
-    $this->setExpectedException('\Exception');
-    $config->setMinLengthUserPassword("abc");
-  }
-  
-  public function testCannotSetMinLengthUserPasswordToNull(){
-    $config = $this->config;
-    $this->assertNull($config->getMinLengthUserPassword());
-   
-    $this->setExpectedException('\Exception');
-    $config->setMinLengthUserPassword(null);
+    if(!is_integer($x) || $x < 4){
+      $this->setExpectedException('\Exception');
+    }
+    
+    $config->setMinLengthUserPassword($x);
+    $this->assertEquals($x, $config->getMinLengthUserPassword());
   }
   
   /**
-   * daysPasswordReuse tests
+   * @dataProvider dataProvider
    */
-  public function testCanSetDaysPasswordReuseToIntegerMoreThanOrEqualTo0(){
+  public function testCanOnlySetDaysPasswordReuseToIntegerMoreThanOrEqualTo0($x){
     $config = $this->config;
     $this->assertNull($config->getDaysPasswordReuse());
-   
-    $config->setDaysPasswordReuse(0);
-    $this->assertEquals(0,$config->getDaysPasswordReuse());
     
-    $config->setDaysPasswordReuse(1);
-    $this->assertEquals(1,$config->getDaysPasswordReuse());
-  }
-  
-  public function testCannotSetDaysPasswordReuseToIntegerLessThan0(){
-    $config = $this->config;
-    $this->assertNull($config->getDaysPasswordReuse());
-   
-    $this->setExpectedException('\Exception');
-    $config->setDaysPasswordReuse(-1);
-  }
-  
-  public function testCannotSetDaysPasswordReuseToFloat(){
-    $config = $this->config;
-    $this->assertNull($config->getDaysPasswordReuse());
-   
-    $this->setExpectedException('\Exception');
-    $config->setDaysPasswordReuse(1.1);
-  }
-  
-  public function testCannotDaysPasswordReuseToString(){
-    $config = $this->config;
-    $this->assertNull($config->getDaysPasswordReuse());
-   
-    $this->setExpectedException('\Exception');
-    $config->setDaysPasswordReuse("abc");
-  }
-  
-  public function testCannotSetDaysPasswordReuseToNull(){
-    $config = $this->config;
-    $this->assertNull($config->getDaysPasswordReuse());
-   
-    $this->setExpectedException('\Exception');
-    $config->setDaysPasswordReuse(null);
-  }  
-  
-  /**
-   * passwordLettersAndNumbers tests
-   */
-  public function testCanSetPasswordLettersAndNumbersTo0(){
-    $config = $this->config;
-    $this->assertNull($config->getPasswordLettersAndNumbers());
-   
-    $config->setPasswordLettersAndNumbers(0);
-    $this->assertEquals(0, $config->getPasswordLettersAndNumbers());
-  }
-  
-  public function testCanSetPasswordLettersAndNumbersTo1(){
-    $config = $this->config;
-    $this->assertNull($config->getPasswordLettersAndNumbers());
-   
-    $config->setPasswordLettersAndNumbers(1);
-    $this->assertEquals(1, $config->getPasswordLettersAndNumbers());
-  }
-  
-  public function testCannotSetPasswordLettersAndNumbersToMoreThan1(){
-    $config = $this->config;
-    $this->assertNull($config->getPasswordLettersAndNumbers());
-   
-    $this->setExpectedException('\Exception');
-    $config->setPasswordLettersAndNumbers(2);
-  }
-  
-  public function testCannotSetPasswordLettersAndNumbersToLessThan0(){
-    $config = $this->config;
-    $this->assertNull($config->getPasswordLettersAndNumbers());
-   
-    $this->setExpectedException('\Exception');
-    $config->setPasswordLettersAndNumbers(-1);
-  }
-  
-  public function testCannotSetPasswordLettersAndNumbersToFloat(){
-    $config = $this->config;
-    $this->assertNull($config->getPasswordLettersAndNumbers());
-   
-    $this->setExpectedException('\Exception');
-    $config->setPasswordLettersAndNumbers(1.1);
-  }
-  
-  public function testCannotSetPasswordLettersAndNumbersToString(){
-    $config = $this->config;
-    $this->assertNull($config->getPasswordLettersAndNumbers());
-   
-    $this->setExpectedException('\Exception');
-    $config->setPasswordLettersAndNumbers("abc");
-  }
-  
-  public function testCannotSetPasswordLettersAndNumbersToNull(){
-    $config = $this->config;
-    $this->assertNull($config->getPasswordLettersAndNumbers());
-   
-    $this->setExpectedException('\Exception');
-    $config->setPasswordLettersAndNumbers(null);
-  } 
-  
-  /**
-   * passwordUpperLower tests
-   */
-  public function testCanSetPasswordUpperLowerTo0(){
-    $config = $this->config;
-    $this->assertNull($config->getPasswordUpperLower());
-   
-    $config->setPasswordUpperLower(0);
-    $this->assertEquals(0, $config->getPasswordUpperLower());
-  }
-  
-  public function testCanSetPasswordUpperLowerTo1(){
-    $config = $this->config;
-    $this->assertNull($config->getPasswordUpperLower());
-   
-    $config->setPasswordUpperLower(1);
-    $this->assertEquals(1, $config->getPasswordUpperLower());
-  }
-  
-  public function testCannotSetPasswordUpperLowerToIntegerMoreThan1(){
-    $config = $this->config;
-    $this->assertNull($config->getPasswordUpperLower());
-   
-    $this->setExpectedException('\Exception');
-    $config->setPasswordUpperLower(2);
-  }
-  
-  public function testCannotSetPasswordUpperLowerToIntegerLessThan0(){
-    $config = $this->config;
-    $this->assertNull($config->getPasswordUpperLower());
-   
-    $this->setExpectedException('\Exception');
-    $config->setPasswordUpperLower(-1);
-  }
-  
-  public function testCannotSetPasswordUpperLowerToFloat(){
-    $config = $this->config;
-    $this->assertNull($config->getPasswordUpperLower());
-   
-    $this->setExpectedException('\Exception');
-    $config->setPasswordUpperLower(1.1);
-  }
-  
-  public function testCannotSetPasswordUpperLowerToString(){
-    $config = $this->config;
-    $this->assertNull($config->getPasswordUpperLower());
-   
-    $this->setExpectedException('\Exception');
-    $config->setPasswordUpperLower("abc");
-  }
-  
-  public function testCannotSetPasswordUpperLowerToNull(){
-    $config = $this->config;
-    $this->assertNull($config->getPasswordUpperLower());
-   
-    $this->setExpectedException('\Exception');
-    $config->setPasswordUpperLower(null);
-  }
-  
-  /**
-   * maxFailedLogins tests
-   */
-  public function testCanSetMaxFailedLoginsToIntegerMoreThanOrEqualTo1(){
-    $config = $this->config;
-    $this->assertNull($config->getMaxFailedLogins());
-   
-    $config->setMaxFailedLogins(1);
-    $this->assertEquals(1, $config->getMaxFailedLogins());
-    $config->setMaxFailedLogins(2);
-    $this->assertEquals(2, $config->getMaxFailedLogins());
-  }
-  
-  public function testCannotSetMaxFailedLoginsToIntegerLessThan1(){
-    $config = $this->config;
-    $this->assertNull($config->getMaxFailedLogins());
-   
-    $this->setExpectedException('\Exception');
-    $config->setMaxFailedLogins(0);
-  }
-  
-  public function testCannotSetMaxFailedLoginsToFloat(){
-    $config = $this->config;
-    $this->assertNull($config->getMaxFailedLogins());
-   
-    $this->setExpectedException('\Exception');
-    $config->setMaxFailedLogins(1.1);
-  }
-  
-  public function testCannotSetMaxFailedLoginsToString(){
-    $config = $this->config;
-    $this->assertNull($config->getMaxFailedLogins());
-   
-    $this->setExpectedException('\Exception');
-    $config->setMaxFailedLogins("abc");
-  }
-  
-  public function testCannotSetMaxFailedLoginsToNull(){
-    $config = $this->config;
-    $this->assertNull($config->getMaxFailedLogins());
-   
-    $this->setExpectedException('\Exception');
-    $config->setMaxFailedLogins(null);
-  }
-  
-  /**
-   * passwordValidity tests
-   */
-  public function testCanSetPasswordValidityToIntegerMoreThanOrEqualTo2(){
-    $config = $this->config;
-    $this->assertNull($config->getPasswordValidity());
-   
-    $config->setPasswordValidity(2);
-    $this->assertEquals(2, $config->getPasswordValidity());
+    if(!is_integer($x) || $x < 0){
+      $this->setExpectedException('\Exception');
+    }
     
-    $config->setPasswordValidity(3);
-    $this->assertEquals(3, $config->getPasswordValidity());
-  }
-  
-  public function testCannotSetPasswordValidityToIntegerLessThan2(){
-    $config = $this->config;
-    $this->assertNull($config->getPasswordValidity());
-   
-    $this->setExpectedException('\Exception');
-    $config->setPasswordValidity(1);
-  }
-  
-  public function testCannotSetPasswordValidityToFloat(){
-    $config = $this->config;
-    $this->assertNull($config->getPasswordValidity());
-   
-    $this->setExpectedException('\Exception');
-    $config->setPasswordValidity(1.1);
-  }
-  
-  public function testCannotSetPasswordValidityToString(){
-    $config = $this->config;
-    $this->assertNull($config->getPasswordValidity());
-   
-    $this->setExpectedException('\Exception');
-    $config->setPasswordValidity("abc");
-  }
-  
-  public function testCannotSetPasswordValidityToNull(){
-    $config = $this->config;
-    $this->assertNull($config->getPasswordValidity());
-   
-    $this->setExpectedException('\Exception');
-    $config->setPasswordValidity(null);
+    $config->setDaysPasswordReuse($x);
+    $this->assertEquals($x, $config->getDaysPasswordReuse());
   }
   
   /**
-   * passwordExpiryDays tests
+   * @dataProvider dataProvider
    */
-  public function testCanSetPasswordExpiryDaysToIntegerMoreThanOrEqualTo2(){
+  public function testCanOnlySetPasswordLettersAndNumbersTo0Or1($x){
     $config = $this->config;
-    $this->assertNull($config->getPasswordExpiryDays());
-   
-    $config->setPasswordExpiryDays(2);
-    $this->assertEquals(2, $config->getPasswordExpiryDays());
+    $this->assertNull($config->getPasswordLettersAndNumbers());
     
-    $config->setPasswordExpiryDays(3);
-    $this->assertEquals(3, $config->getPasswordExpiryDays());
-  } 
-  
-  public function testCannotSetPasswordExpiryDaysToIntegerLessThan2(){
-    $config = $this->config;
-    $this->assertNull($config->getPasswordExpiryDays());
-   
-    $this->setExpectedException('\Exception');
-    $config->setPasswordExpiryDays(1);
-  }
-  
-  public function testCannotSetPasswordExpiryDaysToFloat(){
-    $config = $this->config;
-    $this->assertNull($config->getPasswordExpiryDays());
-   
-    $this->setExpectedException('\Exception');
-    $config->setPasswordExpiryDays(1.1);
-  }
-  
-  public function testCannotSetPasswordExpiryDaysToString(){
-    $config = $this->config;
-    $this->assertNull($config->getPasswordExpiryDays());
-   
-    $this->setExpectedException('\Exception');
-    $config->setPasswordExpiryDays("abc");
-  }
-  
-  public function testCannotSetPasswordExpiryDays(){
-    $config = $this->config;
-    $this->assertNull($config->getPasswordExpiryDays());
-   
-    $this->setExpectedException('\Exception');
-    $config->setPasswordExpiryDays(null);
+    //if it is not an integer or a boolean, expect an exception to be thrown.
+    //if it is an integer and it is not 0 or 1 then expect an exception to be thrown.
+    if(!is_integer($x) || ($x!==0 && $x!==1)){
+      $this->setExpectedException('\Exception');
+    }
+    
+    $config->setPasswordLettersAndNumbers($x);
+    $this->assertEquals($x, $config->getPasswordLettersAndNumbers());
   }
   
   /**
-   * timeout tests
+   * @dataProvider dataProvider
    */
-  public function testCanSetTimeoutToIntegerMoreThanOrEqualTo1(){
+  public function testCanOnlySetPasswordUpperLowerTo0Or1($x){
     $config = $this->config;
-    $this->assertNull($config->getTimeout());
-   
-    $config->setTimeout(1);
-    $this->assertEquals(1, $config->getTimeout());
+    $this->assertNull($config->getPasswordUpperLower());
     
-    $config->setTimeout(2);
-    $this->assertEquals(2, $config->getTimeout());
+    if(!is_integer($x) || ($x!==0 && $x!==1)){
+      $this->setExpectedException('\Exception');
+    }
+    
+    $config->setPasswordUpperLower($x);
+    $this->assertEquals($x, $config->getPasswordUpperLower());
   }
   
-  public function testCannotSetTimeoutToIntegerLessThan1(){
+  /**
+   * @dataProvider dataProvider
+   */
+  public function testCanOnlySetMaxFailedLoginsToIntegerMoreThanOrEqualTo1($x){
     $config = $this->config;
-    $this->assertNull($config->getTimeout());
-   
-    $this->setExpectedException('\Exception');
-    $config->setTimeout(0);
+    $this->assertNull($config->getMaxFailedLogins());
+    
+    if(!is_integer($x) || $x < 1){
+      $this->setExpectedException('\Exception');
+    }
+    
+    $config->setMaxFailedLogins($x);
+    $this->assertEquals($x, $config->getMaxFailedLogins());
   }
   
-  public function testCannotSetTimeoutToFloat(){
+  /**
+   * @dataProvider dataProvider
+   */
+  public function testCanOnlySetPasswordValidityToIntegerMoreThanOrEqualTo2($x){
     $config = $this->config;
-    $this->assertNull($config->getTimeout());
-   
-    $this->setExpectedException('\Exception');
-    $config->setTimeout(1.1);
+    $this->assertNull($config->getPasswordValidity());
+    
+    if(!is_integer($x) || $x < 2){
+      $this->setExpectedException('\Exception');
+    }
+    
+    $config->setPasswordValidity($x);
+    $this->assertEquals($x, $config->getPasswordValidity());
   }
   
-  public function testCannotSetTimeoutToString(){
+  /**
+   * @dataProvider dataProvider
+   */
+  public function testCanOnlySetPasswordExpiryDaysToIntegerMoreThanOrEqualTo2($x){
     $config = $this->config;
-    $this->assertNull($config->getTimeout());
-   
-    $this->setExpectedException('\Exception');
-    $config->setTimeout("abc");
+    $this->assertNull($config->getPasswordExpiryDays());
+    
+    if(!is_integer($x) || $x < 2){
+      $this->setExpectedException('\Exception');
+    }
+    
+    $config->setPasswordExpiryDays($x);
+    $this->assertEquals($x, $config->getPasswordExpiryDays());
   }
   
-  public function testCannotSetTimeoutToNull(){
+  /**
+   * @dataProvider dataProvider
+   */
+  public function testCanOnlySetTimeoutToIntegerMoreThanOrEqualTo1($x){
     $config = $this->config;
     $this->assertNull($config->getTimeout());
-   
-    $this->setExpectedException('\Exception');
-    $config->setTimeout(null);
+    
+    if(!is_integer($x) || $x < 1){
+      $this->setExpectedException('\Exception');
+    }
+    
+    $config->setTimeout($x);
+    $this->assertEquals($x, $config->getTimeout());
   }
   
   /**
